@@ -3,8 +3,10 @@ package Commands;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDate;
 
@@ -17,9 +19,9 @@ public class TodayCommand extends BotCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         LocalDate date  = LocalDate.now();
-
+        SendMessage answer = null;
         switch (date.getDayOfWeek()){
-            case MONDAY: new SendMessage(chat.toString(), "Алгоритмы и структуры данных  3-6\n" +
+            case MONDAY: answer = new SendMessage(chat.getId().toString(), "Алгоритмы и структуры данных  3-6\n" +
                     "доц. Ружицкая Е.А.\n" +
                     "\n" +
                     "Алгоритмы и структуры данных  1-1\n" +
@@ -34,7 +36,7 @@ public class TodayCommand extends BotCommand {
                     "к.3  130\n" +
                     "Чернякова Е.А.");
                 break;
-            case TUESDAY: new SendMessage(chat.toString(),"\"КОНСТРУИРОВАНИЕ ПО\n" +
+            case TUESDAY: answer = new SendMessage(chat.getId().toString(),"\"КОНСТРУИРОВАНИЕ ПО\n" +
                     "4-1\n" +
                     "доц. Кузьменков Д.С.\n" +
                     "\n" +
@@ -50,7 +52,7 @@ public class TodayCommand extends BotCommand {
                     "\n" +
                     "ФИЗИЧЕСКАЯ КУЛЬТУРА");
                 break;
-            case WEDNESDAY:new SendMessage(chat.toString(),"\"ОСНОВЫ АЛГОРИТМИЗАЦИИ И ПРОГРАММИРОВАНИЯ\n" +
+            case WEDNESDAY: answer = new SendMessage(chat.getId().toString(),"\"ОСНОВЫ АЛГОРИТМИЗАЦИИ И ПРОГРАММИРОВАНИЯ\n" +
                     "3-1\n" +
                     "доц. Кузьменков Д.С.\n" +
                     "\n" +
@@ -62,7 +64,7 @@ public class TodayCommand extends BotCommand {
                     "доц. Березовская Е.М.\n" +
                     "проф. Можаровский В.В.");
                 break;
-            case THURSDAY:new SendMessage(chat.toString(), "ФИЗИКА  4-5\n" +
+            case THURSDAY:answer = new SendMessage(chat.getId().toString(), "ФИЗИКА  4-5\n" +
                     "проф. Гиргель С.С.\n" +
                     "ИСТОРИЯ БЕЛАРУСИ  к. 3  108\n" +
                     "асс. Артюшко Н.А.\n" +
@@ -77,7 +79,7 @@ public class TodayCommand extends BotCommand {
                     "\n" +
                     "ФИЗИЧЕСКАЯ КУЛЬТУРА");
                 break;
-            case FRIDAY:new SendMessage(chat.toString(),"ФИЗИКА  4-5\n" +
+            case FRIDAY:answer = new SendMessage(chat.getId().toString(),"ФИЗИКА  4-5\n" +
                     "проф. Гиргель С.С.\"\n" +
                     "ИСТОРИЯ БЕЛАРУСИ  к. 3  108\n" +
                     "доц. Алексейченко Г.А.\n" +
@@ -98,9 +100,14 @@ public class TodayCommand extends BotCommand {
                     "4-11\n" +
                     "Чернякова Е.А.");
                 break;
-            case SATURDAY: new SendMessage(chat.toString(), "ЧИСЛЕННЫЕ МЕТОДЫ\n" +
+            case SATURDAY: answer = new SendMessage(chat.getId().toString(), "ЧИСЛЕННЫЕ МЕТОДЫ\n" +
                     "3-6");
                 break;
+        }
+        try {
+            absSender.execute(answer);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 }

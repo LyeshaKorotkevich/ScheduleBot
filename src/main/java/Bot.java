@@ -1,3 +1,4 @@
+import Commands.HelpCommand;
 import Commands.StartCommand;
 import Commands.TodayCommand;
 import Commands.WeekCommand;
@@ -20,6 +21,7 @@ public final class Bot extends TelegramLongPollingCommandBot {
         register(new StartCommand("start", "Старт"));
         register(new TodayCommand("today", "Сегодня"));
         register(new WeekCommand("week", "Вся неделя"));
+        register(new HelpCommand("help", "Помощь"));
     }
 
     @Override
