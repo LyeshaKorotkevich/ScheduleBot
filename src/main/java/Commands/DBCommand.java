@@ -2,6 +2,7 @@ package Commands;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class DBCommand {
@@ -14,7 +15,7 @@ public class DBCommand {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
             connection.setAutoCommit(false);
             PreparedStatement ps =
-                    connection.prepareStatement("SELECT * FROM schedule WHERE day_of_week = ?");
+                    connection.prepareStatement("SELECT * FROM schedule WHERE day_of_week = ? ORDER BY id");
             ps.setString(1, day);
             ResultSet rs=ps.executeQuery();
             StringBuilder text = new StringBuilder();
@@ -35,9 +36,9 @@ public class DBCommand {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
             connection.setAutoCommit(false);
             PreparedStatement ps =
-                    connection.prepareStatement("SELECT * FROM schedule");
+                    connection.prepareStatement("SELECT * FROM schedule ORDER BY id");
             ResultSet rs=ps.executeQuery();
-            HashMap<String, String> days= new HashMap<>();
+            HashMap<String, String> days= new LinkedHashMap<>();
             while (rs.next()){
                 if (days.containsKey(WEEK_DAY.valueOf(rs.getString(2)).getDescription())) {
                     String text = rs.getString(3) + " " +
