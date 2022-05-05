@@ -1,7 +1,4 @@
-import Commands.HelpCommand;
-import Commands.StartCommand;
-import Commands.TodayCommand;
-import Commands.WeekCommand;
+import Commands.*;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -21,6 +18,7 @@ public final class Bot extends TelegramLongPollingCommandBot {
         register(new StartCommand("start", "Старт"));
         register(new TodayCommand("today", "Сегодня"));
         register(new WeekCommand("week", "Вся неделя"));
+        register(new TomorrowCommand("tomorrow", "Завтра"));
         register(new HelpCommand("help", "Помощь"));
     }
 
