@@ -7,6 +7,10 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+/**
+ * Команда "Неделя"
+ */
+
 public class WeekCommand extends BotCommand {
     public WeekCommand(String commandIdentifier, String description) {
         super(commandIdentifier, description);

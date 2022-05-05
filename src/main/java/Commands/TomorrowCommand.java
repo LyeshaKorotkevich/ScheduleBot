@@ -9,6 +9,11 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDate;
 
+
+/**
+ * Команда "Завтра"
+ */
+
 public class TomorrowCommand extends BotCommand {
     public TomorrowCommand(String commandIdentifier, String description) {
         super(commandIdentifier, description);
@@ -37,6 +42,7 @@ public class TomorrowCommand extends BotCommand {
             case SATURDAY:
                 answer = new SendMessage(chat.getId().toString(), DBCommand.getDay("SATURDAY"));
                 break;
+            default: answer = new SendMessage(chat.getId().toString(), "Сегодня отдыхаем");
         }
         try {
             absSender.execute(answer);
