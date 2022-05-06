@@ -22,7 +22,7 @@ public class TomorrowCommand extends BotCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         LocalDate date = LocalDate.now();
-        SendMessage answer = null;
+        SendMessage answer;
         switch (date.getDayOfWeek().plus(1)) {
             case MONDAY:
                 answer = new SendMessage(chat.getId().toString(), DBCommand.getDay("MONDAY"));
@@ -40,9 +40,13 @@ public class TomorrowCommand extends BotCommand {
                 answer = new SendMessage(chat.getId().toString(), DBCommand.getDay("FRIDAY"));
                 break;
             case SATURDAY:
-                answer = new SendMessage(chat.getId().toString(), DBCommand.getDay("SATURDAY"));
+                if (!DBCommand.getDay("SATURDAY").isEmpty()) {
+                    answer = new SendMessage(chat.getId().toString(), DBCommand.getDay("SATURDAY"));
+                } else {
+                    answer = new SendMessage(chat.getId().toString(), "Завтра отдыхаем");
+                }
                 break;
-            default: answer = new SendMessage(chat.getId().toString(), "Сегодня отдыхаем");
+            default: answer = new SendMessage(chat.getId().toString(), "Завтра отдыхаем");
         }
         try {
             absSender.execute(answer);
