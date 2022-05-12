@@ -13,30 +13,41 @@ public class DBCommand {
     private static final String PASS = "i-opqdlr";
     private static final String[] emojis = {"1️⃣", "2️⃣", "3️⃣", "4️⃣"};
 
+    public static Connection getConn(){
+        Connection conn=null;
+        try {
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            conn.setAutoCommit(false);
+        }catch (SQLException e) {
+            System.out.println("Connection Failed");
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
     public static String getDay(String day) {
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            connection.setAutoCommit(false);
+        try {
+            Connection connection = getConn();
             PreparedStatement ps =
                     connection.prepareStatement("SELECT * FROM schedule WHERE day_of_week = ? ORDER BY id");
             ps.setString(1, day);
-            ResultSet rs=ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             StringBuilder text = new StringBuilder();
-            while (rs.next()){
-                text.append(emojis[rs.getInt(6)-1]).append(rs.getString(3)).append(" ");
+            while (rs.next()) {
+                text.append(emojis[rs.getInt(6) - 1]).append(rs.getString(3)).append(" ");
                 text.append(rs.getString(4)).append(" ");
                 text.append(rs.getString(5)).append("\n");
             }
             return EmojiParser.parseToAliases(text.toString());
-        } catch (SQLException e) {
-            System.out.println("Connection Failed");
+        }catch (SQLException e) {
             e.printStackTrace();
             return "";
         }
     }
 
     public static String getWeek() {
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            connection.setAutoCommit(false);
+        try{
+            Connection connection = getConn();
             PreparedStatement ps =
                     connection.prepareStatement("SELECT * FROM schedule ORDER BY id");
             ResultSet rs=ps.executeQuery();
@@ -61,7 +72,6 @@ public class DBCommand {
             }
             return text.toString();
         } catch (SQLException e) {
-            System.out.println("Connection Failed");
             e.printStackTrace();
             return "";
         }
