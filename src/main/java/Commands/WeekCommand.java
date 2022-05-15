@@ -22,10 +22,12 @@ public class WeekCommand extends BotCommand {
         SendMessage answer = new SendMessage();
         answer.setText(text);
         answer.setChatId(chat.getId().toString());
+        answer.enableMarkdown(true);
         try {
             absSender.execute(answer);
         } catch (TelegramApiException e) {
             //логируем сбой Telegram Bot API, используя userName
+            e.printStackTrace();
         }
     }
 }

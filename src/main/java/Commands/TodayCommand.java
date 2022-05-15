@@ -43,6 +43,7 @@ public class TodayCommand extends BotCommand {
                 break;
             default: answer = new SendMessage(chat.getId().toString(), "Сегодня отдыхаем");
         }
+        answer.enableMarkdown(true);
         try {
             absSender.execute(answer);
         } catch (TelegramApiException e) {
