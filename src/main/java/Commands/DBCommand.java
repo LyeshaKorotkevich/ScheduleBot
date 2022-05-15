@@ -41,7 +41,7 @@ public class DBCommand {
             }
             connection.close();
             return text.toString();
-        }catch (SQLException | ArrayIndexOutOfBoundsException e ) {
+        }catch (SQLException | ArrayIndexOutOfBoundsException | NullPointerException e ) {
             e.printStackTrace();
             return "";
         }
@@ -58,15 +58,12 @@ public class DBCommand {
             ResultSet rs=ps.executeQuery();
             HashMap<String, String> days= new LinkedHashMap<>();
             while (rs.next()){
+                String text = emojis[rs.getInt("nom")-1] + rs.getString("subject") + " " +
+                        rs.getString("teacher") + " " +
+                        rs.getString("cabinet") + "\n";
                 if (days.containsKey(WEEK_DAY.valueOf(rs.getString("day_of_week")).getDescription())) {
-                    String text = emojis[rs.getInt("nom")-1] + rs.getString("subject") + " " +
-                            rs.getString("teacher") + " " +
-                            rs.getString("cabinet") + "\n";
                     days.put(WEEK_DAY.valueOf(rs.getString("day_of_week")).getDescription(), days.get(WEEK_DAY.valueOf(rs.getString("day_of_week")).getDescription()) + text);
                 }else{
-                    String text = emojis[rs.getInt(6)-1] + rs.getString(3) + " " +
-                            rs.getString(4) + " " +
-                            rs.getString(5) + "\n";
                     days.put(WEEK_DAY.valueOf(rs.getString("day_of_week")).getDescription(), text);
                 }
             }
@@ -77,7 +74,7 @@ public class DBCommand {
             }
             connection.close();
             return text.toString();
-        } catch (SQLException e) {
+        } catch (SQLException | ArrayIndexOutOfBoundsException | NullPointerException e) {
             e.printStackTrace();
             return "";
         }
