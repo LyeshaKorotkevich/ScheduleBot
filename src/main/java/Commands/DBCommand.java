@@ -1,7 +1,5 @@
 package Commands;
 
-import com.vdurmont.emoji.EmojiParser;
-
 import java.sql.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

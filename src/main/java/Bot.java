@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 
 public final class Bot extends TelegramLongPollingCommandBot {
+
     private final String BOT_NAME;
     private final String BOT_TOKEN;
 
@@ -67,7 +68,7 @@ public final class Bot extends TelegramLongPollingCommandBot {
         try {
             execute(answer);
         } catch (TelegramApiException e) {
-            //логируем сбой Telegram Bot API, используя userName
+            e.printStackTrace();
         }
     }
 }
